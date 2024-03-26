@@ -1,0 +1,19 @@
+/* Layout.css */
+.container-fluid {
+    padding: 0;
+  }
+  
+  .row {
+    margin: 0;
+  }
+  
+  .col-2 {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .col-10 {
+    padding: 20px;
+  }
+  

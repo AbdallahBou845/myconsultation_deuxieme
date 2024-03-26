@@ -1,0 +1,66 @@
+/* Resultat.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #282c34;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.resultat-container {
+  max-width: 800px;
+  margin-left: 18%;
+  margin-top: 150%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.resultat-heading {
+  text-align: center;
+  color: #ccc;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+button {
+  background-color: #265327;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #043607;
+}
+
+/* Ajout d'un style pour la déconnexion */
+button.logout-btn {
+  background-color: #961d1d;
+}
+
+button.logout-btn:hover {
+  background-color: #670d0d;
+}

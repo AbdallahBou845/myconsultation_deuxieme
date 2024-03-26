@@ -1,0 +1,130 @@
+/* Dashboard.css */
+
+
+
+.dashboard-container {
+  height: 100vh; /* Use the full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #282c34;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+/* Add or modify these styles in your CSS file */
+
+.question-container {
+  margin-bottom: 15px;
+}
+
+.question-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-options {
+  display: flex;
+  flex-wrap: wrap; /* Allow options to wrap to the next line if necessary */
+}
+
+h1.titre_fiche {
+  color: #b6b7b6;
+}
+
+form.f_dh {
+  margin-top: 20px;
+}
+
+label {
+  display: inline-block; /* Display labels in a line */
+  margin-right: 8px; /* Add some spacing between radio buttons and labels */
+}
+
+input[type="radio"] {
+  display: inline-block; /* Display radio buttons in a line */
+  margin-right: 5px; /* Add some spacing between radio buttons and labels */
+}
+
+input[type="text"] {
+  display: inline-block; /* Display radio buttons in a line */
+  width: 380px;}
+button.imp_dh {
+  background-color: #043607;
+  color: #fff;
+  padding: 5px 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 82px;
+}
+
+button.suiv {
+  background-color: #043607;
+  color: #fff;
+  padding: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 41px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 90px;
+}
+
+
+
+
+button.ret {
+  background-color: #043607;
+  color: #fff;
+  padding: 5px 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 90px;
+}
+
+button.soum {
+  background-color: #043607;
+  color: #fff;
+  padding: 5px 10px;
+  margin-top: 5px;
+ 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 90px;
+}
+
+button:hover {
+  background-color: #026204;
+}
+
+.audio-player {
+  display: contents;
+  margin-bottom: 10px;
+}
+
+.play-icon {
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+
+
+/* Loading state */
+p {
+  text-align: center;
+  color: #043607;
+  font-size: 18px;
+}
+
+/* Print styles */
+@media print {
+  input[type="checkbox"] {
+    display: none;
+  }
+}

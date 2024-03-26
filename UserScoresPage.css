@@ -1,0 +1,62 @@
+/* UserScoresPage.css */
+
+/* Style pour le conteneur principal */
+.user-scores-container {
+  margin: 20px;
+}
+
+/* Style pour le tableau */
+.user-scores-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Style pour les en-têtes de tableau */
+.user-scores-table th {
+  background-color: #043607;
+  border: 1px solid #68696b;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style pour les lignes du tableau */
+.user-scores-table td {
+  border: 1px solid #043607;
+  padding: 8px;
+}
+
+/* Style pour les lignes impaires du tableau */
+.user-scores-table tr:nth-child(odd) {
+  background-color: #68696b;
+}
+
+/* Ajouter des styles pour la version responsive */
+/* Ajouter des styles pour la version responsive */
+@media screen and (max-width: 600px) {
+  .user-scores-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Style pour les lignes du tableau en mode responsive */
+  .user-scores-table tr {
+    margin-bottom: 10px;
+    border: 1px solid #043607;
+    background-color: #68696b;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Style pour les cellules (th et td) en mode responsive */
+  .user-scores-table th,
+  .user-scores-table td {
+    box-sizing: border-box;
+    padding: 8px;
+    text-align: left;
+    display: block;
+    width: 100%;
+  }
+}

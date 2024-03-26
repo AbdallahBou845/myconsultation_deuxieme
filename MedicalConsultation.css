@@ -1,0 +1,31 @@
+/* MedicalConsultation.css */
+
+.medical-consultation-container {
+    background-color: #4b5320; /* Vert olive pour évoquer le militaire */
+    color: #fff; /* Texte en blanc pour un contraste élevé */
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .question {
+    margin-bottom: 15px;
+  }
+  
+  .checkbox-label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .checkbox-input {
+    margin-right: 8px;
+  }
+  
+  .submit-button {
+    background-color: #2c3e50; /* Gris-bleu foncé */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
