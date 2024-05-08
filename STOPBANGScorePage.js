@@ -1,8 +1,9 @@
+// STOPBANGScorePage.js
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import './ScorePage.css';
-
 
 const STOPBANGScorePage = () => {
   const { userId } = useParams();
@@ -21,7 +22,6 @@ const STOPBANGScorePage = () => {
       try {
         const userResponsesResponse = await fetch(`http://localhost:8000/user-responses/${userId}`);
         const userResponsesData = await userResponsesResponse.json();
-        console.log('User Responses:', userResponsesData);
   
         const imcResponse = await fetch(`http://localhost:8000/imc/${userId}`);
         const imcData = await imcResponse.json();
@@ -37,11 +37,9 @@ const STOPBANGScorePage = () => {
           calculateScore();
         } else {
           console.error('No user responses found for userId:', userId);
-          // ... Reste du code ...
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-        // ... Reste du code ...
       }
     };
   
@@ -51,7 +49,6 @@ const STOPBANGScorePage = () => {
   const handlePrint = () => {
     window.print();
   };
-
 
   const handleInputChange = (questionId, value) => {
     setResponses(prevResponses => ({ ...prevResponses, [questionId]: value }));
@@ -70,8 +67,6 @@ const STOPBANGScorePage = () => {
           newScore += response === 'Non' ? 0 : response === 'Parfois' ? 1 : response === 'Toujours' ? 2 : 0;
           break;
         case 'q24':
-          newScore += response === 'Oui' ? 1 : 0;
-          break;
         case 'q25':
           newScore += response === 'Oui' ? 1 : 0;
           break;
@@ -79,9 +74,8 @@ const STOPBANGScorePage = () => {
           break;
       }
     });
-    console.log('Reponse', responses);
+
     newScore += imcValue > 35 ? 1 : 0;
-    console.log('imcValue', imcValue);
     setScore(newScore);
     calculateResult(newScore);
   };
@@ -105,8 +99,7 @@ const STOPBANGScorePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     calculateScore();
-
-    // Envoi du score au serveur
+  
     try {
       const response = await fetch('http://localhost:8000/insert-stopbang-score', {
         method: 'POST',
@@ -119,7 +112,7 @@ const STOPBANGScorePage = () => {
           result,
         }),
       });
-
+  
       const data = await response.json();
       if (data.success) {
         console.log('Score STOP-BANG inséré avec succès');
@@ -130,16 +123,16 @@ const STOPBANGScorePage = () => {
       console.error('Erreur lors de l\'envoi du score au serveur:', error);
     }
   };
-
+  
   const handleGoToDashboard = () => {
     navigate('/', { state: { userId } });
   };
 
   return (
     <div id='stopbangForm'>
-      <button class="score" onClick={handlePrint}>Imprimer</button>
+      <button className="score" onClick={handlePrint}>Imprimer</button>
       <h2>STOP-BANG Score</h2>
-      <form class="score" onSubmit={handleSubmit}>
+      <form className="score" onSubmit={handleSubmit}>
         <label>
           Question 23:
           <select value={responses.q23} onChange={(e) => handleInputChange('q23', e.target.value)}>
@@ -177,9 +170,8 @@ const STOPBANGScorePage = () => {
         <button type="submit">Calculer le score</button>
       </form>
 
-      <p class="score">Score: {score}</p>
-      <p class="score">Result: {result}</p>
-      
+      <p className="score">Score: {score}</p>
+      <p className="score">Result: {result}</p>
     </div>
   );
 };

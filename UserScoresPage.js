@@ -28,7 +28,7 @@ const UserScoresPage = () => {
         break;
       case 'STOPBANG':
         console.log('Navigating to STOPBANGScorePage with userId:', userId);
-        navigate('/STOPBANGScorePage/' + userId, { state: { userId, adminId } });
+        navigate(`/STOPBANGScorePage/${userId}`, { state: { userId, adminId } });
         break;
       default:
         break;

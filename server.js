@@ -353,7 +353,12 @@ app.post('/insert-stopbang-score', async (req, res) => {
   const { userId, score, result } = req.body;
 
   console.log('Received request to insert STOP-BANG score:', { userId, score, result });
+  console.log('Received request to insert STOP-BANG score:', { userId, score, result });
 
+  // Vérifiez les valeurs reçues depuis le client
+  console.log('userId:', userId);
+  console.log('score:', score);
+  console.log('result:', result);
   // Vérification si un score existe déjà pour l'utilisateur
   const checkQuery = 'SELECT * FROM stopbang_scores WHERE user_id = ?';
   const existingScore = await new Promise((resolve, reject) => {
