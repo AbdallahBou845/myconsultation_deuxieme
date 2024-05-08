@@ -9,8 +9,11 @@ const Dashboard = ({ userId }) => {
   const [comments, setComments] = useState({});
   const [insertSuccess, setInsertSuccess] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
-  const [formSubmitted, setFormSubmitted] = useState(false); // Nouvel état local
+  const [formSubmitted, setFormSubmitted] = useState(false); 
+  const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
+  const [language, setLanguage] = useState('fr'); 
+
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -23,9 +26,48 @@ const Dashboard = ({ userId }) => {
       }
     };
 
-    // Fetch questions when the component mounts
     fetchQuestions();
   }, [userId]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/user-info/${userId}`);
+        if (!response.ok) {
+          throw new Error('HTTP error! Status: ' + response.status);
+        }
+        const data = await response.json();
+        setUserInfo(data.userInfo); 
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+  
+    fetchUserInfo();
+  }, [userId]);
+  
+
+
+  const filterQuestionsByGender = () => {
+    if (!userInfo || !userInfo.genre) return questions;
+    const userSex = userInfo.genre.toLowerCase();
+    console.log('User sex:', userSex);
+    
+    const filteredQuestions = questions.filter(question => {
+      console.log('Question ID:', question.id);
+      if (userSex === 'homme') {
+        // Retourne true pour toutes les questions qui ne sont pas spécifiquement pour les femmes
+        return question.id <= 47;
+      } else {
+        // Retourne true pour toutes les questions qui sont spécifiquement pour les femmes
+        return question.id <= 58;
+      }
+    });
+    
+    return filteredQuestions;
+  };
+  
+  
 
   const handleOptionChange = (questionId, option) => {
     setAnswers((prevAnswers) => ({
@@ -42,8 +84,7 @@ const Dashboard = ({ userId }) => {
   };
 
   const handleNextQuestions = () => {
-    // Vérifier si toutes les questions actuelles ont des réponses
-    const currentQuestions = questions.slice(currentQuestionIndex, currentQuestionIndex + 10);
+    const currentQuestions = filterQuestionsByGender().slice(currentQuestionIndex, currentQuestionIndex + 10);
     const unansweredQuestions = currentQuestions.filter((question) => (
       !answers[question.id] && question.options.length > 0
     ));
@@ -56,19 +97,16 @@ const Dashboard = ({ userId }) => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 10);
     alert("Série de questions suivante commençant par Numero :" + (currentQuestionIndex + 10));
   };
-  
 
   const handlePreviousQuestions = () => {
-   
     setCurrentQuestionIndex((prevIndex) => Math.max(0, prevIndex - 10));
-    alert("Série de questions précédente commençant :" + Math.max(0, currentQuestionIndex - 10));
+    alert("Série de questions précédente commençant :" + Math.max(0, currentQuestionIndex - 10));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Vérifier si toutes les questions ont des réponses
-    const currentQuestions = questions.slice(currentQuestionIndex, currentQuestionIndex + 10);
+    const currentQuestions = filterQuestionsByGender().slice(currentQuestionIndex, currentQuestionIndex + 10);
     const unansweredQuestions = currentQuestions.filter((question) => (
       !answers[question.id] && question.options.length > 0
     ));
@@ -106,110 +144,113 @@ const Dashboard = ({ userId }) => {
       alert('Error during form submission:' + error);
     }
   };
-  
-  const handleLogout = () => {
-    navigate('/');
-};
-const handleLang = () => {
-  navigate('/DashboardAr');
-};
 
+  const handleLang = () => {
+    setLanguage('ar');
+  };
 
-const handlePrintAllQuestions = () => {
-  const printableContent = questions.map((question, index) => {
-    // Include user's selected answers and comments
-    const userAnswer = answers[question.id];
-    const userComment = comments[question.id];
+  // تحويل الأسئلة إلى اللغة المختارة (الفرنسية أو العربية)
+  const translatedQuestions = questions.map(question => ({
+    ...question,
+    text: language === 'ar' ? question.arabicText : question.text,
+  }));
 
-    // Generate printable content for each question
-    return `
-      ${index + 1}. ${question.text}
-      Options: ${question.options.join(', ')}
-      Your Answer: [${userAnswer || 'Not answered'}]
-      Your Comment: ${userComment || 'No comment'}
-    `;
-  }).join('\n\n');
+  const handlePrintAllQuestions = () => {
+    const printableContent = questions.map((question, index) => {
+      const userAnswer = answers[question.id];
+      const userComment = comments[question.id];
 
-  const printWindow = window.open('', '_blank');
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>Printable Questions with Answers</title>
-        <style>
-          @media print {
-            input[type="checkbox"] {
-              display: none;
+      return `
+        ${index + 1}. ${question.text}
+        Options: ${question.options.join(', ')}
+        Your Answer: [${userAnswer || 'Not answered'}]
+        Your Comment: ${userComment || 'No comment'}
+      `;
+    }).join('\n\n');
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Printable Questions with Answers</title>
+          <style>
+            @media print {
+              input[type="checkbox"] {
+                display: none;
+              }
             }
-          }
-        </style>
-      </head>
-      <body>
-        <pre>${printableContent}</pre>
-        <script>
-          window.onload = function() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function(checkbox) {
-              const label = document.createElement('label');
-              label.innerHTML = checkbox.getAttribute('data-label');
-              checkbox.parentNode.insertBefore(label, checkbox.nextSibling);
-            });
-          };
-        </script>
-      </body>
-    </html>
-  `);
+          </style>
+        </head>
+        <body>
+          <pre>${printableContent}</pre>
+          <script>
+            window.onload = function() {
+              const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(function(checkbox) {
+                const label = document.createElement('label');
+                label.innerHTML = checkbox.getAttribute('data-label');
+                checkbox.parentNode.insertBefore(label, checkbox.nextSibling);
+              });
+            };
+          </script>
+        </body>
+      </html>
+    `);
 
-  printWindow.document.close();
-  printWindow.print();
-};
-  // Render loading state while fetching questions
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   if (questions.length === 0) {
     return <p>Loading...</p>;
   }
 
-  const currentQuestions = questions.slice(currentQuestionIndex, currentQuestionIndex + 10);
+  const currentQuestions = filterQuestionsByGender().slice(currentQuestionIndex, currentQuestionIndex + 10);
   const isFormSubmitted = submittedData !== null;
   const handlePlayAudio = (audioSrc) => {
     const audio = new Audio(audioSrc);
     audio.play();
   };
+
   return (
     <div className='dashboard-container'>
-      
       <button className='imp_dh' type="button" onClick={handlePrintAllQuestions}>Imprimer</button>
-      <button className='imp_dh' type="button" onClick={handleLang}>Arabic</button>
+      <button className='imp_dh' type="button" onClick={handleLang}>العربية</button>
       <h1 className='titre_fiche'>Fiche de renseignement pour consultation préanesthésique</h1>
       <form className='f_dh' onSubmit={handleSubmit}>
         {currentQuestions.map((currentQuestion) => (
           <div key={currentQuestion.id}>
-             {currentQuestion.audio && (
-                <div className="audio-player">
-                  <span className="play-icon" onClick={() => handlePlayAudio(currentQuestion.audio)}>             
-                    ▶
-                  </span>
-                  
-                </div>
-              )}
-
-             
-
+            {currentQuestion.audio && (
+              <div className="audio-player">
+                <span className="play-icon" onClick={() => handlePlayAudio(currentQuestion.audio)}>▶</span>
+              </div>
+            )}
             <label>{currentQuestion.text}</label><br />
             {currentQuestion.options.map((option) => (
               <label key={option}>
-                <input  type="radio" name={currentQuestion.id} value={option} checked={isFormSubmitted ? submittedData.answers[currentQuestion.id] === option : answers[currentQuestion.id] === option}
-                  onChange={() => handleOptionChange(currentQuestion.id, option)} required/>
+                <input  
+                  type="radio" 
+                  name={currentQuestion.id} 
+                  value={option} 
+                  checked={isFormSubmitted ? submittedData.answers[currentQuestion.id] === option : answers[currentQuestion.id] === option}
+                  onChange={() => handleOptionChange(currentQuestion.id, option)} 
+                  required
+                />
                 {option}
               </label>
             ))}
             {currentQuestion && currentQuestion.options.length === 0 && (
-                <input type="text" name={`comment_${currentQuestion.id}`} value={isFormSubmitted ? submittedData.comments[currentQuestion.id] || '' : comments[currentQuestion.id] || ''}
-                onChange={(e) => handleCommentChange(currentQuestion.id, e.target.value)}  placeholder="repond..." required // Ajoutez l'attribut required ici
+              <input 
+                type="text" 
+                name={`comment_${currentQuestion.id}`} 
+                value={isFormSubmitted ? submittedData.comments[currentQuestion.id] || '' : comments[currentQuestion.id] || ''}
+                onChange={(e) => handleCommentChange(currentQuestion.id, e.target.value)}  
+                placeholder="repond..." 
+                required 
               />
             )}
-         
           </div>
         ))}
-        
         {currentQuestionIndex > 0 && (
           <button  className='ret' type="button" onClick={handlePreviousQuestions}>Retour</button>
         )}
@@ -220,6 +261,7 @@ const handlePrintAllQuestions = () => {
           <button className='soum' ctype="submit">Soumettre</button>
         )}
       </form>
+      <button className="logout-button" onClick={() => navigate('/login')}>Déconnexion</button>
     </div>
   );
 };

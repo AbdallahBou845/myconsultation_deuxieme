@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './Resultat.css'; // Import the CSS file
+import './Resultat.css'; // Importer le fichier CSS
 
-
-// Import the STOP-BANG questions
+// Importer les questions depuis data.js
 import { questions } from './data';
 
 const Resultat = () => {
   const [userResponses, setUserResponses] = useState([]);
   const { userId } = useLocation().state;
+  const [currentPage, setCurrentPage] = useState(1); // Ajout de l'état pour la page actuelle
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,90 +18,76 @@ const Resultat = () => {
         const data = await response.json();
         setUserResponses(data.userResponses);
       } catch (error) {
-        console.error('Error fetching user responses:', error);
+        console.error('Erreur lors de la récupération des réponses utilisateur :', error);
       }
     };
 
-    // Fetch user responses when the component mounts
+    // Récupérer les réponses utilisateur lorsque le composant est monté
     fetchUserResponses();
   }, [userId]);
 
   const handleLogout = () => {
-        navigate('/');
+    navigate('/');
   };
-  const handleSB = () => {
-   
-    navigate('/STOPBANGScorePage/' + userId, { state: { userId } });
-  };
-  const handleDuke = () => {
-   
-    navigate(`/DukeScorePage/${userId}`, { state: { userId } });
-  };
-  const handleMeet = () => {
-    
-    navigate(`/MeetScorePage/${userId}`, { state: { userId } });
-  };
-  const handleNYHA = () => {
-    
-    navigate(`/NYHAScore/${userId}`, { state: { userId } });
-  };
-  const handleApfel = () => {
-    
-    navigate(`/ApfelScorePage/${userId}`, { state: { userId } });
-  };
-  
- 
-
-  if (!userResponses || userResponses.length === 0) {
-    return <p>Aucune réponse trouvée pour cet utilisateur.</p>;
-  }
-
-  const currentUser = userResponses[0];
-
 
   const handlePrint = () => {
     window.print();
   };
 
+  const questionsPerPage = 10; // Nombre de questions par page
+
+  // Index de la première et dernière question de la page actuelle
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+
+  // Questions à afficher sur la page actuelle
+  const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+
+  // Fonction pour passer à la page suivante
+  const nextPage = () => {
+    if (currentPage < Math.ceil(questions.length / questionsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Fonction pour revenir à la page précédente
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="resultat-container">
-    <button class="score" onClick={handlePrint}>Imprimer</button>
-    <h2 className="resultat-heading">Résultats de la consultation préanesthésique</h2>
-    <div key={currentUser.id} className="user-result">
-      <h3>User ID: {currentUser.user_id}</h3>
-      <h4>Username: {currentUser.username}</h4>
-      <h4>Email: {currentUser.email}</h4>
-      <table >
-      <tr>
-          <td><button onClick={handleSB}>STOP BANG Score</button></td>
-          <td><button onClick={handleDuke}>Duke</button></td>
-          <td><button onClick={handleMeet}>Meet</button></td>
-          <td><button onClick={handleNYHA}>NYHA</button></td>
-          <td><button onClick={handleApfel}>Apfel</button></td>
-        </tr>
-      </table>
-      <table className="resultat-table">
-        <thead>
-          <tr>
-            <th>Question</th>
-            <th>Response</th>
-            <th>Commentaire</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userResponses.map((response) => (
-            <tr key={response.id}>
-              <td>{response.questions}</td>
-              <td>{response.option_selected}</td>
-              <td>{response.comment}</td>
+      <button className="score" onClick={handlePrint}>Imprimer</button>
+      <h2 className="resultat-heading">Résultats de la consultation préanesthésique</h2>
+      <div className="user-result">
+        {/* Afficher les questions, leur ID et les réponses utilisateur */}
+        <table className="resultat-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Question</th>
+              <th>Response</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      
+          </thead>
+          <tbody>
+            {currentQuestions.map((question, index) => (
+              <tr key={index}>
+                <td>{question.id}</td>
+                <td>{question.text}</td>
+                <td>{userResponses[indexOfFirstQuestion + index]?.option_selected}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* Boutons pour naviguer entre les pages */}
+        <div className="pagination">
+          <button onClick={prevPage} disabled={currentPage === 1}>Précédent</button>
+          <button onClick={nextPage} disabled={currentPage === Math.ceil(questions.length / questionsPerPage)}>Suivant</button>
+        </div>
+      </div>
     </div>
-    
-  </div>
   );
 };
 
