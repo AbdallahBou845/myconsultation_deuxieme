@@ -58,13 +58,14 @@ const Resultat = () => {
   };
 
   return (
-    <div className="resultat-container">
-      <button className="score" onClick={handlePrint}>Imprimer</button>
-      <h2 className="resultat-heading">Résultats de la consultation préanesthésique</h2>
+    <div className="container mt-4">
+      <button className="btn btn-primary mr-2" onClick={handlePrint}>Imprimer</button>
+      <button className="btn btn-danger" onClick={handleLogout}>Déconnexion</button>
+      <h2 className="my-4">Résultats de la consultation préanesthésique</h2>
       <div className="user-result">
         {/* Afficher les questions, leur ID et les réponses utilisateur */}
-        <table className="resultat-table">
-          <thead>
+        <table className="table">
+          <thead className="thead-dark">
             <tr>
               <th>ID</th>
               <th>Question</th>
@@ -81,10 +82,10 @@ const Resultat = () => {
             ))}
           </tbody>
         </table>
-        {/* Boutons pour naviguer entre les pages */}
+        {/* Bouton "Suivant" en bas de la table */}
         <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>Précédent</button>
-          <button onClick={nextPage} disabled={currentPage === Math.ceil(questions.length / questionsPerPage)}>Suivant</button>
+          <button className="btn btn-primary mr-2" onClick={prevPage} disabled={currentPage === 1}>Précédent</button>
+          <button className="btn btn-primary" onClick={nextPage} disabled={currentPage === Math.ceil(questions.length / questionsPerPage)}>Suivant</button>
         </div>
       </div>
     </div>
