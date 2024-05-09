@@ -445,24 +445,42 @@ app.post('/insert-meet-score', async (req, res) => {
   const { userId, meetScore } = req.body;
 
   try {
-    // Tentative d'insertion du score MEET dans la base de données
-    const insertQuery = 'INSERT INTO meet_scores (user_id, score) VALUES (?, ?)';
-    await connection.query(insertQuery, [userId, meetScore]);
+    // Vérification si un score MEET existe déjà pour l'utilisateur
+    const checkQuery = 'SELECT * FROM meet_scores WHERE user_id = ?';
+    const existingScore = await new Promise((resolve, reject) => {
+      connection.query(checkQuery, [userId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results[0]);
+        }
+      });
+    });
 
-    console.log('Score MEET inséré avec succès');
-    res.json({ success: true, message: 'Score MEET inséré avec succès' });
-  } catch (error) {
-    if (error.code === 'ER_DUP_ENTRY') {
-      // Si une contrainte unique est violée (utilisateur existant), renvoyer un message approprié
-      console.log('Score MEET déjà inséré pour cet utilisateur');
-      return res.json({ success: false, message: 'Score MEET déjà inséré pour cet utilisateur' });
+    if (existingScore) {
+      console.log('Un score MEET existe déjà pour cet utilisateur. Aucune insertion effectuée.');
+      return res.json({ success: false, message: 'Un score MEET existe déjà pour cet utilisateur.' });
     } else {
-      // Gérer d'autres erreurs
-      console.error('Erreur lors de l\'insertion du score MEET:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
+      // Si aucun score existant, effectuer l'insertion dans la nouvelle table
+      const insertQuery = 'INSERT INTO meet_scores (user_id, score) VALUES (?, ?)';
+      connection.query(insertQuery, [userId, meetScore], (error) => {
+        if (error) {
+          console.error('Erreur lors de l\'insertion du score MEET:', error);
+          res.status(500).send('Erreur serveur');
+        } else {
+          console.log('Score MEET inséré avec succès');
+          res.json({ success: true, message: 'Score MEET inséré avec succès' });
+        }
+      });
     }
+  } catch (error) {
+    console.error('Erreur lors de l\'insertion du score MEET:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
+
+
+
 
 
 
