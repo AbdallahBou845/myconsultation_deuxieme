@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ApfelScorePage = () => {
   const { userId } = useParams();
@@ -12,7 +10,6 @@ const ApfelScorePage = () => {
     q9: '',
     q6: '',
     q43: '',
-    
     // Ajoutez d'autres questions ici jusqu'à q42
   });
   const navigate = useNavigate();
@@ -32,7 +29,8 @@ const ApfelScorePage = () => {
           }, {});
 
           setResponses(initialResponses);
-          calculateScore();
+          // Appel de calculateScore dès que les données sont disponibles
+          calculateScore(initialResponses);
         } else {
           console.error('No user responses found for userId:', userId);
           // ... Reste du code ...
@@ -50,10 +48,10 @@ const ApfelScorePage = () => {
     setResponses(prevResponses => ({ ...prevResponses, [questionId]: value }));
   };
 
-  const calculateScore = () => {
+  const calculateScore = (userResponses) => {
     let newScore = 0;
 
-    Object.entries(responses).forEach(([questionId, response]) => {
+    Object.entries(userResponses).forEach(([questionId, response]) => {
       switch (questionId) {
         case 'q59':
           newScore += response === 'Féminin' ? 1 : 0;
@@ -92,11 +90,8 @@ const ApfelScorePage = () => {
     setResult(calculatedResult);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    calculateScore();
-
-    // Envoi du score au serveur
+  const handleSubmit = async () => {
+    // Pas besoin de recalcule, car le score a déjà été calculé lors de l'affichage initial
     try {
       const response = await fetch('http://localhost:8000/insert-Apfel-score', {
         method: 'POST',
@@ -108,7 +103,7 @@ const ApfelScorePage = () => {
           score,
           result,
         }),
-      });
+      }); 
 
       const data = await response.json();
       if (data.success) {
@@ -121,7 +116,6 @@ const ApfelScorePage = () => {
     }
   };
 
-
   const handleGoToDashboard = () => {
     navigate('/', { state: { userId } });
   };
@@ -130,7 +124,7 @@ const ApfelScorePage = () => {
     <div>
       <h2>Apfel Score</h2>
       <form onSubmit={handleSubmit}>
-      <label>
+        <label>
           Question 59:
           <select value={responses.q59} onChange={(e) => handleInputChange('q59', e.target.value)}>
             <option value="Féminin">Féminin</option>
@@ -158,9 +152,8 @@ const ApfelScorePage = () => {
             <option value="Non">Non</option>
           </select>
         </label>
-        
 
-        <button type="submit">Calculer le score</button>
+        <button type="submit">Calculer et insérer le score</button>
       </form>
 
       <p>Score: {score}</p>

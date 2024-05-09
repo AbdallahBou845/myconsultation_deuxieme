@@ -1,19 +1,12 @@
-// STOPBANGScorePage.js
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ScorePage.css';
 
 const STOPBANGScorePage = () => {
   const { userId } = useParams();
   const [score, setScore] = useState(0);
   const [result, setResult] = useState('');
-  const [responses, setResponses] = useState({
-    q23: '',
-    q24: '',
-    q25: '',
-  });
+  const [responses, setResponses] = useState({ q23: '', q24: '', q25: '' });
   const [imcValue, setImcValue] = useState(0);
   const navigate = useNavigate();
 
@@ -22,19 +15,22 @@ const STOPBANGScorePage = () => {
       try {
         const userResponsesResponse = await fetch(`http://localhost:8000/user-responses/${userId}`);
         const userResponsesData = await userResponsesResponse.json();
-  
+        console.log('User Responses:', userResponsesData);
+
         const imcResponse = await fetch(`http://localhost:8000/imc/${userId}`);
         const imcData = await imcResponse.json();
-  
+
         if (userResponsesData.userResponses.length > 0) {
           const initialResponses = userResponsesData.userResponses.reduce((accumulator, currentResponse) => {
             accumulator[`q${currentResponse.question_id}`] = currentResponse.option_selected || '';
             return accumulator;
           }, {});
-          
+
           setResponses(initialResponses);
           setImcValue(imcData.imcData.imc_value);
-          calculateScore();
+
+          // Appel de calculateScore dès que les données sont disponibles
+          calculateScore(initialResponses, imcData.imcData.imc_value);
         } else {
           console.error('No user responses found for userId:', userId);
         }
@@ -42,10 +38,10 @@ const STOPBANGScorePage = () => {
         console.error('Error fetching user data:', error);
       }
     };
-  
+
     fetchUserData();
   }, [userId]);
-  
+
   const handlePrint = () => {
     window.print();
   };
@@ -58,10 +54,10 @@ const STOPBANGScorePage = () => {
     setImcValue(value);
   };
 
-  const calculateScore = () => {
+  const calculateScore = (userResponses, imc) => {
     let newScore = 0;
 
-    Object.entries(responses).forEach(([questionId, response]) => {
+    Object.entries(userResponses).forEach(([questionId, response]) => {
       switch (questionId) {
         case 'q23':
           newScore += response === 'Non' ? 0 : response === 'Parfois' ? 1 : response === 'Toujours' ? 2 : 0;
@@ -75,7 +71,7 @@ const STOPBANGScorePage = () => {
       }
     });
 
-    newScore += imcValue > 35 ? 1 : 0;
+    newScore += imc > 35 ? 1 : 0;
     setScore(newScore);
     calculateResult(newScore);
   };
@@ -96,10 +92,8 @@ const STOPBANGScorePage = () => {
     setResult(calculatedResult);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    calculateScore();
-  
+  const handleSubmit = async () => {
+    // Pas besoin de recalcule, car le score a déjà été calculé lors de l'affichage initial
     try {
       const response = await fetch('http://localhost:8000/insert-stopbang-score', {
         method: 'POST',
@@ -111,8 +105,8 @@ const STOPBANGScorePage = () => {
           score,
           result,
         }),
-      });
-  
+      }); 
+
       const data = await response.json();
       if (data.success) {
         console.log('Score STOP-BANG inséré avec succès');
@@ -123,16 +117,12 @@ const STOPBANGScorePage = () => {
       console.error('Erreur lors de l\'envoi du score au serveur:', error);
     }
   };
-  
-  const handleGoToDashboard = () => {
-    navigate('/', { state: { userId } });
-  };
 
   return (
     <div id='stopbangForm'>
       <button className="score" onClick={handlePrint}>Imprimer</button>
       <h2>STOP-BANG Score</h2>
-      <form className="score" onSubmit={handleSubmit}>
+      <form className="score">
         <label>
           Question 23:
           <select value={responses.q23} onChange={(e) => handleInputChange('q23', e.target.value)}>
@@ -167,7 +157,8 @@ const STOPBANGScorePage = () => {
         </label>
         <br />
 
-        <button type="submit">Calculer le score</button>
+        {/* Soumission du formulaire avec le bouton */}
+        <button type="button" onClick={handleSubmit}>Calculer et insérer le score</button>
       </form>
 
       <p className="score">Score: {score}</p>

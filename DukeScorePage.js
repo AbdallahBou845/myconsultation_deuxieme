@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import './ScorePage.css';
-
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DukeScorePage = () => {
   const { userId } = useParams();
@@ -20,11 +17,9 @@ const DukeScorePage = () => {
     q39: '',
     q40: '',
     q41: '',
-    q42: '',
-    // Ajoutez d'autres questions ici jusqu'à q42
+    q42: ''
   });
   const navigate = useNavigate();
-  const [isScoreCalculated, setIsScoreCalculated] = useState(false); // Nouvel état
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -40,14 +35,14 @@ const DukeScorePage = () => {
           }, {});
 
           setResponses(initialResponses);
-          calculateScore();
+
+          // Appel de calculateScore dès que les données sont disponibles
+          calculateScore(initialResponses);
         } else {
           console.error('No user responses found for userId:', userId);
-          // ... Reste du code ...
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-        // ... Reste du code ...
       }
     };
 
@@ -57,17 +52,11 @@ const DukeScorePage = () => {
   const handleInputChange = (questionId, value) => {
     setResponses(prevResponses => ({ ...prevResponses, [questionId]: value }));
   };
-  const handleLogout = () => {
-    navigate('/');
-};
-const handlePrint = () => {
-  window.print();
-};
 
-  const calculateScore = () => {
+  const calculateScore = (userResponses) => {
     let newScore = 0;
 
-    Object.entries(responses).forEach(([questionId, response]) => {
+    Object.entries(userResponses).forEach(([questionId, response]) => {
       switch (questionId) {
         case 'q31':
           newScore += response === 'Oui' ? 1.75 : 0;
@@ -87,7 +76,7 @@ const handlePrint = () => {
         case 'q36':
           newScore += response === 'Oui' ? 3.5 : 0;
           break;
-          case 'q37':
+        case 'q37':
           newScore += response === 'Oui' ? 8 : 0;
           break;
         case 'q38':
@@ -96,7 +85,7 @@ const handlePrint = () => {
         case 'q39':
           newScore += response === 'Oui' ? 5.25 : 0;
           break;
-          case 'q40':
+        case 'q40':
           newScore += response === 'Oui' ? 6 : 0;
           break;
         case 'q41':
@@ -107,6 +96,7 @@ const handlePrint = () => {
           break;
         default:
           break;
+      
       }
     });
 
@@ -130,11 +120,10 @@ const handlePrint = () => {
     setResult(calculatedResult);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    calculateScore();
+  const handleSubmit = async () => {
+    // Recalcul du score et du résultat avant de les insérer dans la base de données
+    calculateScore(responses);
 
-    // Envoi du score au serveur
     try {
       const response = await fetch('http://localhost:8000/insert-duke-score', {
         method: 'POST',
@@ -159,17 +148,11 @@ const handlePrint = () => {
     }
   };
 
-
-  const handleGoToDashboard = () => {
-    navigate('/UserScoresPage', { state: { userId } });
-  };
-
   return (
     <div id='dukeForm'>
-      <button class="score" onClick={handlePrint}>Imprimer</button>
       <h2>Duke Score</h2>
-      <form class="score"  onSubmit={handleSubmit}>
-      <label>
+      <form className="score" onSubmit={handleSubmit}>
+        <label>
           Question 31:
           <select value={responses.q31} onChange={(e) => handleInputChange('q31', e.target.value)}>
             <option value="Oui">Oui</option>
@@ -257,9 +240,8 @@ const handlePrint = () => {
         <button type="submit">Calculer le score</button>
       </form>
 
-      <p  class="score">Score: {score}</p>
-      <p  class="score">Result: {result}</p>
-      
+      <p className="score">Score: {score}</p>
+      <p className="score">Result: {result}</p>
     </div>
   );
 };

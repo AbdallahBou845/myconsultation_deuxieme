@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ScorePage.css';
 
 const NYHAScorePage = () => {
@@ -30,7 +29,7 @@ const NYHAScorePage = () => {
           }, {});
 
           setResponses(initialResponses);
-          calculateScore();
+          calculateScore(initialResponses); // Appel de calculateScore une fois les données initialisées
         } else {
           console.error('No user responses found for userId:', userId);
           // ... Reste du code ...
@@ -48,10 +47,10 @@ const NYHAScorePage = () => {
     setResponses(prevResponses => ({ ...prevResponses, [questionId]: value }));
   };
 
-  const calculateScore = () => {
+  const calculateScore = (userResponses) => { // prenez les réponses utilisateur comme argument
     let newScore = 0;
 
-    Object.entries(responses).forEach(([questionId, response]) => {
+    Object.entries(userResponses).forEach(([questionId, response]) => {
       switch (questionId) {
         case 'q44':
           newScore += response === 'Oui' ? 2 : 0;
@@ -89,7 +88,7 @@ const NYHAScorePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    calculateScore();
+    calculateScore(responses); // Passer les réponses utilisateur à calculateScore
 
     // Envoi du score au serveur
     try {
@@ -116,10 +115,6 @@ const NYHAScorePage = () => {
     }
   };
 
-  const handleGoToDashboard = () => {
-    navigate('/', { state: { userId } });
-  };
-
   const handlePrint = () => {
     window.print();
   };
@@ -127,7 +122,7 @@ const NYHAScorePage = () => {
   return (
     <div id='imc'>
       <h2>NYHA Score</h2>
-      <form class="score" onSubmit={handleSubmit}>
+      <form className="score" onSubmit={handleSubmit}>
         <label>
           Question 44:
           <select value={responses.q44} onChange={(e) => handleInputChange('q44', e.target.value)}>
@@ -156,8 +151,8 @@ const NYHAScorePage = () => {
         <button type="submit">Calculer le score</button>
       </form>
 
-      <p class="score">Score: {score}</p>
-      <p class="score">Result: {result}</p>
+      <p className="score">Score: {score}</p>
+      <p className="score">Result: {result}</p>
       <button onClick={handlePrint}>Imprimer</button>
     </div>
   );

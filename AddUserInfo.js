@@ -57,7 +57,7 @@ const [genre, setGenre] = useState(''); // Provide a default value, e.g., an emp
         console.log('User information successfully sent to the server');
         // Navigate to Dashboard only if userId is available
         if (userId) {
-          navigate('/IMPCPage', { state: { userId } });
+          navigate('/Dashboard', { state: { userId } });
         }
       } else {
         console.error('Error sending user information to the server');

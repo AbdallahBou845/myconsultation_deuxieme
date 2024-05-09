@@ -100,11 +100,11 @@ const UserScoresPage = () => {
         <tbody>
           {userScores.length > 0 && (
             <tr key={`user-${userScores[0].userId}`}>
-              <td>{userScores[0].duke_score || 'N/A'}</td>
-              <td>{userScores[0].meet_score || 'N/A'}</td>
-              <td>{userScores[0].nyha_score || 'N/A'}</td>
-              <td>{userScores[0].apfel_score || 'N/A'}</td>
-              <td>{userScores[0].stopbang_score || 'N/A'}</td>
+              <td>{userScores[0].duke_score}</td>
+              <td>{userScores[0].meet_score }</td>
+              <td>{userScores[0].nyha_score }</td>
+              <td>{userScores[0].apfel_score }</td>
+              <td>{userScores[0].stopbang_score }</td>
             </tr>
           )}
         </tbody>
