@@ -1,396 +1,387 @@
-// data.js
-
-
-
-
+// data2.js
 
 const questions = [
-    {
-      id: 1,
-      text: 'هل يعاني المريض من أحد الأمراض التالية',
-      options: ['Aucune', 'Hypertension artérielle', 'Asthme', 'Diabète', 'Insuffisance rénale', 'Epilepsie', 'Dyslipidémie', 'Anémie', 'Troubles psychiatriques', 'Cardiopathie', 'Ulcère gastrique', 'Endocrinopathie'],
-      comment: [], // Default comment value
-      audio: 'audio1',
-    },
-    {
-      id: 2,
-      text: 'ما هي الأدوية التي يتعاطاها حاليا (مع تحديد اسم الدواء، الجرعات اليومية، وقت أخذ الدواء)',
-      options: [],
-      comment: '', // Default comment value
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045345_182100.mp3',
-    },
-    {
-      id: 3,
-      text: 'هل أجرى عمليات جراحية قبل الآن (حددها، مع التاريخ)',
-      options: ['Non', 'Oui'],
-      comment: '', // Default comment value
-      audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-045550_164256.mp3',
-    },
-    {
-      id: 4,
-      text: 'ماهو نوع التبنيج الذي استعمل خلال كل عملية : (كلي، نصفي، موضعي...) ',
-      options: [],
-      comment: '', // Default comment value
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045807_172389.mp3',
-    },
-  
-    
-    {
-      id: 5,
-      text: 'Est-ce que vous aviez un recours à une anesthésie pour une autre raison (endoscopie, accouchement)?',
-      options: ['Non', 'Oui'],
-      comment: 'Préciser',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 6,
-      text: 'Est-ce que vous avez rencontré des complications chirurgicales ou anesthésiques?',
-      options: ['Non', 'Oui'],
-      comment: 'Préciser',
-      audio: 'https://s5-9.ttsmaker-file.com/file/2023-12-03-070237_106641.mp3',
-    },
-    {
-      id: 7,
-      text: 'Est-ce que vous étiez hospitalisé avant (à part pour être opérer)?',
-      options: ['Non', 'Oui'],
-      comment: 'Préciser la cause',
-      audio: 'https://s5-4.ttsmaker-file.com/file/2023-12-03-070542_147492.mp3',
-    },
-    {
-      id: 8,
-      text: 'Est-ce que vous présentez une allergie pour un médicament?',
-      options: ['Non', 'Oui'],
-      comment: 'Préciser',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070829_145905.mp3',
-    },
-    {
-      id: 9,
-      text: 'Est-ce que vous fumez (ou Neffa)?',
-      options: ['Non', 'Oui'],
-      comment: 'Nombre de cigarette par jour… Nombre d’année de tabagisme …',
-      audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-070925_102745.mp3',
-    },
-    {
-      id: 10,
-      text: 'Est-ce que vous buvez de l’alcool?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5-9.ttsmaker-file.com/file/2023-12-03-071853_193998.mp3',
-    },
-   
-    {
-      id: 11,
-      text: 'Est-ce que vous présentez un saignement répété?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-071958_149613.mp3',
-    },
-    {
-      id: 12,
-      text: 'Est-ce que vous présentez un saignement prolongé lors d’une plaie?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-072114_167542.mp3',
-    },
-    {
-      id: 13,
-      text: 'Est-ce que vous présentez des ecchymoses fréquentes sans cause évidente?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5-2.ttsmaker-file.com/file/2023-12-03-072204_154548.mp3',
-    },
-    {
-      id: 14,
-      text: 'Est-ce que vous avez rencontré une hémorragie inhabituelle lors d’une opération (ou lors d’une extraction dentaire…)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    // ... Ajouter d'autres questions au besoin
-    {
-      id: 15,
-      text: 'Est-ce que vous avez reçu une transfusion de sang avant (lors d’une chirurgie ou autre cause)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 16,
-      text: 'Est-ce que vous avez quelqu’un dans la famille qui présente un trouble de la coagulation?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 17,
-      text: 'Est-ce que vous avez quelqu’un dans la famille qui présente une maladie musculaire héréditaire?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 18,
-      text: 'Est-ce que vous avez quelqu’un dans la famille qui a rencontré un incident en rapport avec l’anesthésie?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 19,
-      text: 'Est-ce que vous rencontrez une difficulté à monter deux étages sans repos?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 20,
-      text: 'Est-ce que vous rencontrez une difficulté à monter un étage sans repos?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 21,
-      text: 'Est-ce que vous présentez une dyspnée lors de l’exercice d’un effort?',
-      options: ['Non', 'Oui'],
-      comment: '',
-      audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
-    },
-    {
-      id: 22,
-      text: 'Est-ce que vous présentez une douleur thoracique lors de l’exercice d’un effort?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 23,
-      text: 'Est-ce que vous ronflez la nuit?',
-      options: ['Non', 'Parfois', 'Toujours'],
-      comment: '',
-    },
-    {
-      id: 24,
-      text: 'Quelqu\'un a-t-il observé que vous vous arrêtiez de respirer pendant votre sommeil?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 25,
-      text: 'Sentez-vous souvent fatigué, épuisé ou somnolent pendant la journée?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 26,
-      text: 'Sentez-vous des palpitations sans cause évidente?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 27,
-      text: 'Présentez-vous parfois une vertige ou syncope?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 28,
-      text: 'Avez-vous une prothèse dentaire?',
-      options: ['Non', 'Dents fixes', 'Dents instables'],
-      comment: '',
-    },
-    {
-      id: 29,
-      text: 'Avez-vous une pathologie en rapport avec la colonne vertébrale?',
-      options: ['Non', 'Douleur', 'Autres problèmes'],
-      comment: 'Préciser',
-    },
-    // ... Ajouter d'autres questions au besoin
-    {
-      id: 30,
-      text: 'Quels sont vos chiffres tensionnels habituels :',
-      options: ['Moins 8','Entre 8 et 13 ','Plus 13'],
-      comment: '',
-    },
-    
-     
-    {
-      id: 31,
-      text: 'Marchez-vous à l\'intérieur (par exemple vous déplacer autour de votre maison)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 32,
-      text: 'Marchez-vous 1 à 2 blocs de maisons sur un sol plat (par exemple sur environ 200m sur chemin plat)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 33,
-      text: 'Est-ce que vous pouvez monter un escalier ou une colline (par exemple un étage d\'un escalier)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 34,
-      text: 'Est-ce que vous pouvez courir sur une courte distance?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 35,
-      text: 'Est-ce que vous pouvez faire des travaux légers à la maison (par exemple nettoyer la poussière, laver les vaisselles)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 36,
-      text: 'Est-ce que vous pouvez faire des travaux modérés à la maison (par exemple, passer l\'aspirateur, balayer le sol, porter les courses)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 37,
-      text: 'Est-ce que vous pouvez faire de gros travaux à la maison (par exemple, soulever ou déplacer des meubles lourds)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 38,
-      text: 'Est-ce que vous pouvez faire du jardinage (par exemple ratisser les feuilles, désherber, pousser la tondeuse du gazon)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 39,
-      text: 'Est-ce que vous pouvez avoir des relations sexuelles?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 40,
-      text: 'Est-ce que vous pouvez participer à des activités récréatives modérées (par exemple, golf, bowling, danse, tennis en double, lancer une balle de baseball)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 41,
-      text: 'Est-ce que vous pouvez participer à des sports intenses (par exemple, natation, tennis en simple, football, basket-ball, ski)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 42,
-      text: 'Est-ce que vous avez présenté des nausées et des vomissements après une opération (dans les 24 heures suivant l’opération) ou vous avez un mal de transport?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 43,
-      text: 'Est-ce que votre activité usuelle entraîne soit fatigue, dyspnée, douleurs angineuses ou palpitations?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 44,
-      text: 'Est-ce que vous êtes confortable au repos, mais l\'activité physique habituelle entraîne fatigue, palpitations ou dyspnée?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 45,
-      text: 'Est-ce que vous présentez une dyspnée, palpitations ou fatigue au repos et en cas d\'effort, la gêne augmente?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 46,
-      text: 'Est-ce que vous avez présenté une infection respiratoire dans le mois précédent?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    // Pour les femmes
-    {
-      id: 47,
-      text: 'Est-ce que vous êtes enceinte (ou vous pouvez l’être)?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 48,
-      text: 'Est-ce que vous êtes allaitante?',
-      options: ['Non', 'Oui'],
-      comment: '',
-    },
-    {
-      id: 49,
-      text: 'Nombre de grossesse :',
-      options: ['1','2','3','plus'],
-      comment: '',
-    },
-    {
-      id: 50,
-      text: 'Nombre d’accouchement :',
-      options: ['1','2','3','plus'],
-      comment: '',
-    },
-    {
-      id: 51,
-      text: 'Nombre d’enfant vivant :',
-      options: ['1','2','3','plus'],
-      comment: '',
-    },
-    // Pour les enfants
-    {
-      id: 52,
-      text: 'Né par : ',
-      options: ['Voie basse','Césarienne'],
-      comment: '',
-    },
-    {
-      id: 53,
-      text: 'Est-ce qu’il est prématuré : ',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 54,
-      text: 'Est-ce que les parents sont apparentés : ',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 55,
-      text: 'Est-ce qu’il était hospitalisé après la naissance : ',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 56,
-      text: 'Est-ce que le développement psychomoteur est normal : ',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 57,
-      text: 'Est-ce qu’il a reçu tous les vaccins nécessaires :',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 58,
-      text: 'Est-ce qu’il a présenté des convulsions fébriles durant l’enfance :',
-      options: ['Non','Oui'],
-      comment: '',
-    },
-    {
-      id: 59,
-      text: 'Sexe :',
-      options: ['Féminin','Masculin '],
-      comment: '',
-    },
-  ];
-  
-  
-  module.exports = { questions };
-  
+  {
+    id: 1,
+    text: 'السؤال 1: هل تتلقى علاجًا لأحد الأمراض التالية؟',
+    options: ['لا شيء', 'ارتفاع ضغط الدم', 'الربو', 'السكري', 'فشل الكلية', 'الصرع', 'ارتفاع الدهون في الدم', 'فقر الدم', 'اضطرابات نفسية', 'أمراض القلب', 'قرحة المعدة', 'اضطرابات الغدة الصماء'],
+    audio: 'audio1',
+  },
+  {
+    id: 2,
+    text: 'ما هي الأدوية التي تتناولها حاليًا (حدد اسم الدواء وعدد الجرعات ووقت تناولها)؟',
+    options: [],
+    audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045345_182100.mp3',
+  },
+  {
+    id: 3,
+    text: 'هل أجريت عمليات جراحية سابقة؟',
+    options: ['لا', 'نعم'],
+    comment: '', // قيمة تعليق افتراضية
+    audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-045550_164256.mp3',
+  },
+  {
+    id: 4,
+    text: 'اترك تعليقًا (اختياريًا):',
+    options: [],
+    comment: '', // قيمة تعليق افتراضية
+    audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045807_172389.mp3',
+  },
+
+  {
+    id: 5,
+    text: 'هل تم استخدام التخدير لأي سبب آخر (مثل النظام الهضمي، الولادة)؟',
+    options: ['لا', 'نعم'],
+    comment: 'يرجى التوضيح',
+    audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+    id: 6,
+    text: 'هل واجهت مضاعفات جراحية أو تخديرية؟',
+    options: ['لا', 'نعم'],
+    comment: 'يرجى التوضيح',
+    audio: 'https://s5-9.ttsmaker-file.com/file/2023-12-03-070237_106641.mp3',
+},
+{
+    id: 7,
+    text: 'هل كنت مستشفى من قبل (باستثناء الجراحة)؟',
+    options: ['لا', 'نعم'],
+    comment: 'يرجى تحديد السبب',
+    audio: 'https://s5-4.ttsmaker-file.com/file/2023-12-03-070542_147492.mp3',
+},
+{
+    id: 8,
+    text: 'هل تعاني من حساسية لأي دواء؟',
+    options: ['لا', 'نعم'],
+    comment: 'يرجى التوضيح',
+    audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070829_145905.mp3',
+},
+{
+    id: 9,
+    text: 'هل تدخن (أو تشم أيضًا)؟',
+    options: ['لا', 'نعم'],
+    comment: 'عدد السجائر يوميًا... عدد سنوات التدخين...',
+    audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-070925_102745.mp3',
+},
+{
+    id: 10,
+    text: 'هل تشرب الكحول؟',
+    options: ['لا', 'نعم'],
+    comment: '',
+    audio: 'https://s5-9.ttsmaker-file.com/file/2023-12-03-071853_193998.mp3',
+},
+
+{
+  id: 11,
+  text: 'هل تعاني من نزيف متكرر؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-071958_149613.mp3',
+},
+{
+  id: 12,
+  text: 'هل تعاني من نزيف طويل عند الجرح؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-072114_167542.mp3',
+},
+{
+  id: 13,
+  text: 'هل تعاني من ظهور كدمات بشكل متكرر بدون سبب واضح؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5-2.ttsmaker-file.com/file/2023-12-03-072204_154548.mp3',
+},
+{
+  id: 14,
+  text: 'هل واجهت نزيفًا غير عادي أثناء عملية جراحية (أو خلع الأسنان ...؟)',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+
+{
+  id: 15,
+  text: 'هل تلقيت نقل دم في السابق (خلال عملية جراحية أو لأسباب أخرى)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 16,
+  text: 'هل هناك شخص في العائلة يعاني من اضطراب تخثر الدم؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 17,
+  text: 'هل هناك شخص في العائلة يعاني من مرض عضلي وراثي؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 18,
+  text: 'هل هناك شخص في العائلة واجه حادث متعلق بالتخدير؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 19,
+  text: 'هل تواجه صعوبة في صعود سلمين دون استراحة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 20,
+  text: 'هل تواجه صعوبة في صعود طابق دون استراحة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 21,
+  text: 'هل تعاني من ضيق تنفس أثناء ممارسة الجهد؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+  audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-070109_122619.mp3',
+},
+{
+  id: 22,
+  text: 'هل تعاني من ألم في الصدر أثناء ممارسة الجهد؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 23,
+  text: 'هل تشخّر أثناء النوم؟',
+  options: ['لا', 'أحيانًا', 'دائمًا'],
+  comment: '',
+},
+{
+  id: 24,
+  text: 'هل لاحظ أحدهم أنك تتوقف عن التنفس أثناء النوم؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 25,
+  text: 'هل تشعر بالتعب والإرهاق أو النعاس في النهار بشكل متكرر؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 26,
+  text: 'هل تشعر بالقلقات بدون سبب واضح؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 27,
+  text: 'هل تعاني أحيانًا من الدوار أو فقدان الوعي؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 28,
+  text: 'هل لديك تركيبة أسنان؟',
+  options: ['لا', 'أسنان ثابتة', 'أسنان غير ثابتة'],
+  comment: '',
+},
+{
+  id: 29,
+  text: 'هل لديك مشكلة مرتبطة بالعمود الفقري؟',
+  options: ['لا', 'ألم', 'مشاكل أخرى'],
+  comment: 'يرجى التوضيح',
+},
+// ... إضافة المزيد من الأسئلة حسب الحاجة
+{
+  id: 30,
+  text: 'ما هي قراءات ضغط الدم الطبيعية لديك؟',
+  options: ['أقل من 8', 'بين 8 و 13', 'أكثر من 13'],
+  comment: '',
+},
+{
+  id: 31,
+  text: 'هل تمشي في الداخل (على سبيل المثال تتنقل داخل منزلك)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 32,
+  text: 'هل تمشي لمسافة تتراوح بين 1 و 2 كتلة من المنازل على سطح مستوٍ (على سبيل المثال حوالي 200 متر على طريق مستقيم)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 33,
+  text: 'هل يمكنك صعود سلم أو تل أو جبل (على سبيل المثال طابق واحد من سلم)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 34,
+  text: 'هل يمكنك الجري لمسافة قصيرة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 35,
+  text: 'هل يمكنك القيام بأعمال خفيفة في المنزل (على سبيل المثال تنظيف الغبار، غسل الأطباق)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 36,
+  text: 'هل يمكنك القيام بأعمال متوسطة في المنزل (على سبيل المثال تمرير المكنسة الكهربائية، مسح الأرض، حمل البضائع)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 37,
+  text: 'هل يمكنك القيام بأعمال ثقيلة في المنزل (على سبيل المثال رفع أو نقل الأثاث الثقيل)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 38,
+  text: 'هل يمكنك القيام بالزراعة (على سبيل المثال حش الأوراق، التخلص من الأعشاب الضارة، جر ركوب جزازة العشب)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 39,
+  text: 'هل يمكنك ممارسة الجنس؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 40,
+  text: 'هل يمكنك المشاركة في أنشطة ترفيهية معتدلة (على سبيل المثال، الغولف، البولينغ، الرقص، التنس الزوجي، رمي كرة البيسبول)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 41,
+  text: 'هل يمكنك المشاركة في أنشطة رياضية مكثفة (على سبيل المثال، السباحة، التنس الفردي، كرة القدم، كرة السلة، التزلج)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 42,
+  text: 'هل واجهت غثيانًا وقيءًا بعد عملية (في الساعات الـ 24 الأولى بعد العملية) أو لديك دوار؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 43,
+  text: 'هل يؤدي النشاط العادي لديك إلى تعب، أو ضيق في التنفس، أو ألم في الصدر، أو الخفقان؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 44,
+  text: 'هل أنت مرتاح في الراحة، لكن النشاط البدني العادي يؤدي إلى تعب، أو خفقان القلب، أو ضيق في التنفس؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 45,
+  text: 'هل تعاني من ضيق في التنفس، خفقان القلب، أو التعب في الراحة، وعند المجهود يزداد الشعور بالضيق؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 46,
+  text: 'هل واجهت عدوى تنفسية في الشهر السابق؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+// للنساء
+{
+  id: 47,
+  text: 'هل أنت حامل (أو قد تكونين كذلك)؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 48,
+  text: 'هل ترضعين؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 49,
+  text: 'عدد الحمل:',
+  options: ['1', '2', '3', 'أكثر'],
+  comment: '',
+},
+{
+  id: 50,
+  text: 'عدد الولادات:',
+  options: ['1', '2', '3', 'أكثر'],
+  comment: '',
+},
+{
+  id: 51,
+  text: 'عدد الأطفال الأحياء:',
+  options: ['1', '2', '3', 'أكثر'],
+  comment: '',
+},
+// للأطفال
+{
+  id: 52,
+  text: 'ولد عن طريق:',
+  options: ['المهبل', 'قيصري'],
+  comment: '',
+},
+{
+  id: 53,
+  text: 'هل كان مبتسرًا؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 54,
+  text: 'هل الوالدين قرابة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 55,
+  text: 'هل كان مستشفى بعد الولادة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 56,
+  text: 'هل التطور النفسي والحركي طبيعي؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 57,
+  text: 'هل حصل على جميع اللقاحات الضرورية؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 58,
+  text: 'هل كانت لديه نوبات حمى في الطفولة؟',
+  options: ['لا', 'نعم'],
+  comment: '',
+},
+{
+  id: 59,
+  text: 'النوع:',
+  options: ['أنثى', 'ذكر'],
+  comment: '',
+},
+
+
+];
+
+module.exports = { questions };

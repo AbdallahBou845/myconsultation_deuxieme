@@ -30,6 +30,10 @@ const UserScoresPage = () => {
         console.log('Navigating to STOPBANGScorePage with userId:', userId);
         navigate(`/STOPBANGScorePage/${userId}`, { state: { userId, adminId } });
         break;
+      case 'ASAscore':
+        console.log('Navigating to ASAscorePage with userId:', userId);
+        navigate(`/ASAscore/${userId}`, { state: { userId, adminId } });
+        break;
       default:
         break;
     }
@@ -95,16 +99,18 @@ const UserScoresPage = () => {
             <th>NYHA Score</th>
             <th>Apfel Score</th>
             <th>STOP-BANG Score</th>
+            <th>ASA Score</th>
           </tr>
         </thead>
         <tbody>
           {userScores.length > 0 && (
             <tr key={`user-${userScores[0].userId}`}>
-              <td>{userScores[0].duke_score}</td>
-              <td>{userScores[0].meet_score }</td>
-              <td>{userScores[0].nyha_score }</td>
-              <td>{userScores[0].apfel_score }</td>
-              <td>{userScores[0].stopbang_score }</td>
+              <td>{userScores[0].duke_score || 'N/A'}</td>
+              <td>{userScores[0].meet_score || 'N/A'}</td>
+              <td>{userScores[0].nyha_score || 'N/A'}</td>
+              <td>{userScores[0].apfel_score || 'N/A'}</td>
+              <td>{userScores[0].stopbang_score || 'N/A'}</td>
+              <td>{userScores[0].asa_score || 'N/A'}</td>
             </tr>
           )}
         </tbody>
@@ -114,6 +120,7 @@ const UserScoresPage = () => {
           <td><button onClick={() => navigateToScorePage('NYHA')}>Cliquez</button></td>
           <td><button onClick={() => navigateToScorePage('Apfel')}>Cliquez</button></td>
           <td><button onClick={() => navigateToScorePage('STOPBANG')}>Cliquez</button></td>
+          <td><button onClick={() => navigateToScorePage('ASAscore')}>Cliquez</button></td>
         </tr>
       </table>
     </div>

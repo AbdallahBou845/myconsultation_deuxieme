@@ -513,6 +513,34 @@ app.post('/insert-nyha-score', (req, res) => {
 });
 
 
+
+app.post('/asa-score', (req, res) => {
+  const { userId, score, result } = req.body;
+
+  // Vérifiez d'abord si le score ASA existe déjà pour cet utilisateur
+  const checkQuery = 'SELECT id FROM asa_scores WHERE user_id = ? LIMIT 1';
+  connection.query(checkQuery, [userId], (checkError, checkResults) => {
+    if (checkError) {
+      console.error('Erreur lors de la vérification du score ASA:', checkError);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    } else if (checkResults.length > 0) {
+      // Un score ASA existe déjà pour cet utilisateur
+      res.json({ success: false, message: 'Le score ASA existe déjà pour cet utilisateur' });
+    } else {
+      // Aucun score ASA trouvé, procédez à l'insertion
+      const insertQuery = 'INSERT INTO asa_scores (user_id, score, result) VALUES (?, ?, ?)';
+      connection.query(insertQuery, [userId, score, result], (insertError, insertResults) => {
+        if (insertError) {
+          console.error('Erreur lors de l\'insertion du score ASA:', insertError);
+          res.status(500).json({ success: false, error: 'Internal Server Error' });
+        } else {
+          res.json({ success: true, message: 'Score ASA inséré avec succès' });
+        }
+      });
+    }
+  });
+});
+
 // Endpoint pour récupérer tous les scores et réponses des utilisateurs
 // Endpoint pour récupérer tous les scores et réponses des utilisateurs
 // Endpoint pour récupérer tous les scores et réponses des utilisateurs
@@ -529,7 +557,9 @@ app.get('/all-user-scores/:userId', async (req, res) => {
         meet_scores.score as meet_score,
         nyha_scores.score as nyha_score,
         apfel_scores.score as apfel_score,
-        stopbang_scores.score as stopbang_score
+        stopbang_scores.score as stopbang_score,
+        asa_scores.score as asa_score,
+        asa_scores.result as asa_result
       FROM users
       LEFT JOIN user_info ON users.id = user_info.user_id
       LEFT JOIN duke_scores ON users.id = duke_scores.user_id
@@ -537,6 +567,7 @@ app.get('/all-user-scores/:userId', async (req, res) => {
       LEFT JOIN nyha_scores ON users.id = nyha_scores.user_id
       LEFT JOIN apfel_scores ON users.id = apfel_scores.user_id
       LEFT JOIN stopbang_scores ON users.id = stopbang_scores.user_id
+      LEFT JOIN asa_scores ON users.id = asa_scores.user_id
       WHERE users.id = ?;`;
 
     connection.query(query, [userId], (error, results) => {

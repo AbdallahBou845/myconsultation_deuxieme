@@ -1,7 +1,7 @@
 // data.js
 
 
-
+ 
 
 
 const questions = [
@@ -9,26 +9,23 @@ const questions = [
     id: 1,
     text: 'Question 1: Est-ce que vous êtes suivi pour l\'une des maladies suivantes?',
     options: ['Aucune', 'Hypertension artérielle', 'Asthme', 'Diabète', 'Insuffisance rénale', 'Epilepsie', 'Dyslipidémie', 'Anémie', 'Troubles psychiatriques', 'Cardiopathie', 'Ulcère gastrique', 'Endocrinopathie'],
-    comment: [], // Default comment value
-    audio: 'audio1',
+    audio: 'http://localhost/myconsultation_deuxieme/assets/audio/question1.mp3',
   },
   {
     id: 2,
     text: 'Quels sont les médicaments que vous prenez actuellement (précisez le nom du médicament, le nombre de prises et l’horaire de la prise)?',
     options: [],
-    comment: '', // Default comment value
-    audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045345_182100.mp3',
+    audio: 'http://localhost/myconsultation_deuxieme/assets/audio/question2.mp3',
   },
   {
     id: 3,
     text: 'Est-ce que vous avez effectué des opérations avant?',
     options: ['Non', 'Oui'],
-    comment: '', // Default comment value
-    audio: 'https://s5-10.ttsmaker-file.com/file/2023-12-03-045550_164256.mp3',
+    audio: 'http://localhost/myconsultation_deuxieme/assets/audio/question3.mp3',
   },
   {
     id: 4,
-    text: 'Laissez un commentaire (facultatif):',
+    text: 'Laissez un mmentaire (faculcotatif):',
     options: [],
     comment: '', // Default comment value
     audio: 'https://s5.ttsmaker-file.com/file/2023-12-03-045807_172389.mp3',
@@ -325,7 +322,7 @@ const questions = [
   {
     id: 49,
     text: 'Nombre de grossesse :',
-    options: ['1','2','3','plus'],
+    options: ['0','1','2','3','plus'],
     comment: '',
   },
   {

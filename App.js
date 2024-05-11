@@ -17,6 +17,7 @@ import UserScoresPage from './UserScoresPage';
 import ApfelScorePage from './ApfelScorePage';
 import LoginAdmin from './LoginAdmin';
 import ListUsersPage from './ListUsersPage';
+import ASAscore from './ASAscore';
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -36,6 +37,7 @@ function App() {
 const handleSignup = async (userId) => {
   console.log('Signup logic');
   // Additional logic for handling signup
+  navigate('/login');
 };
 
 
@@ -78,6 +80,7 @@ const handleSignup = async (userId) => {
         <Route path="/MeetScorePage/:userId" element={<MeetScorePage />} />
         <Route path="/NYHAScore/:userId" element={<NYHAScore />} />
         <Route path="/ApfelScorePage/:userId" element={<ApfelScorePage />} />
+        <Route path="/ASAscore/:userId" element={<ASAscore />} />
 
         <Route path="/loginadmin" element={<LoginAdmin />} />
         <Route path="/listuserspage/:adminId" element={<ListUsersPage />} />
